@@ -1,0 +1,55 @@
+
+<style>                            
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.rotaryCnt {
+    width: fit-content;
+    display: flex;
+    --sense: -1; /* -1 down-up (default), +1 up-down */
+    &.down {
+        --sense: 1;
+    }
+    .digitCnt {
+        --size: 26px;
+        display: block;
+        overflow: hidden;
+        height: var(--size);
+        width:  var(--size);
+        border: 1px solid #b7b7b7;              
+        border-left: 3px solid #b7b7b7;
+        position: relative;
+        font-size: 20px;
+        padding: 0 4px;
+        .blq0, .blq1 {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            flex-wrap: wrap;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+         /*Posición inicial de bloque no visible*/    
+        .blq1 {
+            top: calc(-1 * var(--sense) * 100%); 
+        }
+    }
+}
+.animation {
+    animation: digit-in 1s linear forwards 1;
+}
+@keyframes digit-in {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(var(--sense) * var(--size))); }
+
+
+}
+</style>
+

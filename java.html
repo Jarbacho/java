@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Derivado de "Proyecto: libro de recetas"</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="t.css">
+        <SCRIPT Language="JavaScript"></script>
+        
+
+<script>
+//final: array {dia, mes,año}
+function diasHasta(final){
+  let Hoy=new Date();
+  let fin = new Date(final.año, final.mes, final.dia);
+  let mseg_dia=1000*60*60*24;
+  let dias ;
+  if (Hoy.getMonth()==final.mes && Hoy.getDate()>final.dia) {
+      fin.setFullYear(fin.getFullYear()+1) ;
+  }
+  dias = Math.ceil((fin.getTime()-Hoy.getTime())/(mseg_dia));
+  let cuadro=document.getElementById('cuenta');
+  cuadro.innerText="Faltan "+dias+" dias hasta "+fin.toLocaleDateString()
+} 
+</script>
+
+<script> 
+function media() {
+  let total=0, res, numDatos, item;
+  numDatos = arguments.length;
+  for (item = 0; item < numDatos; item++)
+    {
+     total += arguments[item];
+    }
+  res = total/numDatos;
+  return res;
+ }
+</script>
+
+
+
+<body>
+<div class="rotaryCnt down">
+    <div class="digitCnt" id="dig2"></div>
+    <div class="digitCnt" id="dig1"></div>
+    <div class="digitCnt" id="dig0"></div>
+</div>
+</body>
+</head>
+<body>
+<script>
+ function sumar(sum1, sum2)
+{
+    let resultado;
+    resultado = sum1 + sum2;
+    return resultado;
+}
+alert("7 + 10 = "+ sumar(7, 10) );
+/*Mostrar resultado*/
+</script>
+
+<body>
+<p>La media de 4,51,42,26,11 es: 
+<script>
+document.write( media( 4,51,42,26,11) );
+</script>
+</p>
+
+
+<div id="cuenta"></div>
+<script>
+diasHasta({año:2030, mes:1, dia:25} )
+</script>
+
+
+<script>              
+function createDigits(name, max, duration) {
+    let dig;
+    let blocks=[];              
+    let node = document.getElementById(name);
+    for (i = 0; i < 2; i++) {
+        dig = document.createElement("div");
+        dig.innerText = i.toString().padStart(2, '0');
+        dig.classList.add("blq" + i);
+        dig.classList.add("animation");
+        dig.style.setProperty("animation-duration", duration + "s");
+        node.appendChild(dig);
+        blocks.push(dig);              
+    }
+    dig.toggleBlqs = true; // true down-up, false up-down
+    dig.maxCount = max;
+    dig.duration = duration;
+    dig.digits = blocks;              
+    dig.addEventListener("animationend", endAnim);              
+}
+// Salta cuando el segundo cuadro acaba su animación
+// Uno sale y otro entra, alternativamente
+function endAnim(event) {
+    let value = 0;
+    let maxCount;
+    let node = event.target;
+    let digs = node.digits;
+    digs[0].classList.remove("animation");
+    digs[1].classList.remove("animation");
+    maxCount = digs[1].maxCount;
+    // Inicializar ambos: saliente abajo, entrante dentro
+    if (digs[1].toggleBlqs) {
+        updatePosValue(digs[1], digs[0], maxCount);
+    } else {
+        updatePosValue(digs[0], digs[1], maxCount);
+    }
+    digs[0].classList.add("animation");
+    digs[1].classList.add("animation");
+    digs[1].toggleBlqs = !digs[1].toggleBlqs;
+}
+function updatePosValue(visible, novisible, maxCount) {
+    let value = 0;
+    visible.classList.replace("blq1", "blq0");
+    novisible.classList.replace("blq0", "blq1");
+    value = parseInt(novisible.innerText) + 2;
+    value = (value >= maxCount) ? (value - maxCount) : value;
+    novisible.innerText = value.toString().padStart(2, '0');
+}
+createDigits("dig0", 10, 1);
+createDigits("dig1", 10, 10);
+createDigits("dig2", 5, 100);              
+</script>
+</body>
